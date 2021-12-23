@@ -1,11 +1,14 @@
+const bcrypt = require("bcrypt");
 const express = require("express");
 const { User } = require("../models");
 
 const router = express.Router();
 
 router.post("/register", async (req, res, next) => {
+  const { email, password, username } = req.body;
   try {
-    const user = new User(req.body);
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new User({ email, username, password: hashedPassword });
     const savedUser = await user.save();
     return res.json({ email: savedUser.email });
   } catch (error) {
@@ -16,8 +19,10 @@ router.post("/register", async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   try {
-    const user = await User.findOne({ email, password });
-    return res.json(user);
+    const user = await User.findOne({ email });
+    const ismatch = await bcrypt.compare(password, user.password);
+    if (ismatch) return res.json({ email: user.email });
+    return res.status(301).json({ error: "Incorrect password" });
   } catch (error) {
     next(error);
   }
