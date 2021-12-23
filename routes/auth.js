@@ -7,7 +7,7 @@ router.post("/register", async (req, res, next) => {
   try {
     const user = new User(req.body);
     const savedUser = await user.save();
-    return res.json(savedUser);
+    return res.json({ email: savedUser.email });
   } catch (error) {
     next(error);
   }
