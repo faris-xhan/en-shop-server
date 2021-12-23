@@ -6,6 +6,7 @@ const db = require("./services/db");
 const cookieParser = require("cookie-parser");
 
 const indexRouter = require("./routes/index");
+const authRouter = require("./routes/auth");
 
 /* Connecting Database */
 db.createConnection().then(console.log).catch(console.error);
@@ -19,5 +20,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
+app.use("/auth", authRouter);
 
 module.exports = app;
