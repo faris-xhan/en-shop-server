@@ -9,8 +9,8 @@ const orderSchema = new mongoose.Schema(
   {
     status: { type: String, default: "Pending" },
     userId: { type: String, required: true },
-    address: { type: Object, require: true },
-    amount: { type: Number, require: true },
+    address: { type: Object, required: true },
+    amount: { type: Number, required: true },
     products: [product],
   },
   { timestamps: true }
