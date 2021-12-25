@@ -1,11 +1,11 @@
-const bcrypt = require("bcrypt");
-const express = require("express");
-const tokens = require("../utils/tokens");
-const { User } = require("../models");
+const bcrypt = require('bcrypt');
+const express = require('express');
+const tokens = require('../utils/tokens');
+const { User } = require('../models');
 
 const router = express.Router();
 
-router.post("/register", async (req, res, next) => {
+router.post('/register', async (req, res, next) => {
   const { email, password, username } = req.body;
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -17,7 +17,7 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
-router.post("/login", async (req, res, next) => {
+router.post('/login', async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
@@ -29,7 +29,7 @@ router.post("/login", async (req, res, next) => {
       });
       return res.json({ email: user.email, accessToken });
     }
-    return res.status(301).json({ error: "Incorrect password" });
+    return res.status(301).json({ error: 'Incorrect password' });
   } catch (error) {
     next(error);
   }

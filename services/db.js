@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const constants = require("../constants");
+const mongoose = require('mongoose');
+const constants = require('../constants');
 
 const createConnection = async () => {
   const { connection } = await mongoose.connect(constants.mongodbStr);

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const product = {
   product: { type: String },
@@ -7,7 +7,7 @@ const product = {
 
 const orderSchema = new mongoose.Schema(
   {
-    status: { type: String, default: "Pending" },
+    status: { type: String, default: 'Pending' },
     userId: { type: String, required: true },
     address: { type: Object, required: true },
     amount: { type: Number, required: true },
@@ -16,5 +16,5 @@ const orderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Order = mongoose.model("Order", orderSchema);
+const Order = mongoose.model('Order', orderSchema);
 module.exports = Order;
