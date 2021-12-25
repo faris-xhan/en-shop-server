@@ -3,7 +3,7 @@ const authenticateToken = require("../middlewares/authenticateToken");
 const router = express.Router();
 
 router.get("/", authenticateToken, (req, res, next) => {
-  res.json({ message: "Okay" });
+  res.json(req.user);
 });
 
 module.exports = router;

@@ -25,7 +25,7 @@ router.post("/login", async (req, res, next) => {
     if (ismatch) {
       const accessToken = tokens.generateAccessToken({
         userId: user._id,
-        isAdmin: user.idAdmin,
+        isAdmin: user.isAdmin,
       });
       return res.json({ email: user.email, accessToken });
     }
