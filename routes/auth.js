@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const express = require("express");
+const tokens = require("../utils/tokens");
 const { User } = require("../models");
 
 const router = express.Router();
@@ -21,7 +22,13 @@ router.post("/login", async (req, res, next) => {
   try {
     const user = await User.findOne({ email });
     const ismatch = await bcrypt.compare(password, user.password);
-    if (ismatch) return res.json({ email: user.email });
+    if (ismatch) {
+      const accessToken = tokens.generateAccessToken({
+        userId: user._id,
+        isAdmin: user.idAdmin,
+      });
+      return res.json({ email: user.email, accessToken });
+    }
     return res.status(301).json({ error: "Incorrect password" });
   } catch (error) {
     next(error);
