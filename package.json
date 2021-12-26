@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "DEBUG=server:* nodemon ./bin/www",
+    "db": "mongod --dbpath=$HOME/data >>  logs/mongo.servers.log",
     "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
   },
   "dependencies": {
