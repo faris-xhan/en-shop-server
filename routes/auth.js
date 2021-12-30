@@ -1,17 +1,17 @@
-const bcrypt = require('bcrypt');
 const express = require('express');
 const tokens = require('../utils/tokens');
 const { User } = require('../models');
+const { compareHash, createHash } = require('../utils/hashing');
 
 const router = express.Router();
 
 router.post('/register', async (req, res, next) => {
   const { email, password, username } = req.body;
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await createHash(password);
     const user = new User({ email, username, password: hashedPassword });
     const savedUser = await user.save();
-    return res.json({ email: savedUser.email });
+    return res.json({ email: savedUser.email, id: user._id });
   } catch (error) {
     next(error);
   }
@@ -21,7 +21,7 @@ router.post('/login', async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-    const ismatch = await bcrypt.compare(password, user.password);
+    const ismatch = await compareHash(password, user.password);
     if (ismatch) {
       const accessToken = tokens.generateAccessToken({
         userId: user._id,

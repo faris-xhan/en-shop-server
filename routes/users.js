@@ -1,10 +1,10 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const { User } = require('../models');
 const {
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin,
 } = require('../middlewares/tokenVerifications');
+const { createHash } = require('../utils/hashing');
 
 const router = express.Router();
 
@@ -70,7 +70,7 @@ router.get('/stats', verifyTokenAndAdmin, async (req, res, next) => {
 // Update user
 router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
   if (req.body.password) {
-    req.body.password = await bcrypt.hash(password, 10);
+    req.body.password = await createHash(req.body.password);
   }
 
   try {
