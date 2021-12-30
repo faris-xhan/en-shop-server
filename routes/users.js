@@ -2,14 +2,14 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const { User } = require('../models');
 const {
-  varifyTokenAndAuthorization,
-  varifyTokenAndAdmin,
-} = require('../middlewares/tokenVarifications');
+  verifyTokenAndAuthorization,
+  verifyTokenAndAdmin,
+} = require('../middlewares/tokenVerifications');
 
 const router = express.Router();
 
 // Get all users
-router.get('/', varifyTokenAndAdmin, async (req, res, next) => {
+router.get('/', verifyTokenAndAdmin, async (req, res, next) => {
   const query = req.query.new;
   try {
     const users = query
@@ -22,7 +22,7 @@ router.get('/', varifyTokenAndAdmin, async (req, res, next) => {
 });
 
 // GET USER
-router.get('/find/:id', varifyTokenAndAdmin, async (req, res, next) => {
+router.get('/find/:id', verifyTokenAndAdmin, async (req, res, next) => {
   try {
     const user = await User.findOne(
       { _id: req.params.id },
@@ -42,7 +42,7 @@ router.get('/find/:id', varifyTokenAndAdmin, async (req, res, next) => {
 });
 
 // Get users stats
-router.get('/stats', varifyTokenAndAdmin, async (req, res, next) => {
+router.get('/stats', verifyTokenAndAdmin, async (req, res, next) => {
   const date = new Date();
   const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
 
@@ -68,7 +68,7 @@ router.get('/stats', varifyTokenAndAdmin, async (req, res, next) => {
 });
 
 // Update user
-router.put('/:id', varifyTokenAndAuthorization, async (req, res) => {
+router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
   if (req.body.password) {
     req.body.password = await bcrypt.hash(password, 10);
   }
