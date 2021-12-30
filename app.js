@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
+const userRouter = require('./routes/users');
 
 /* Connecting Database */
 db.createConnection().then(console.log).catch(console.error);
@@ -18,7 +19,8 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
 app.use('/auth', authRouter);
+app.use('/user', userRouter);
 
+app.use('/', indexRouter);
 module.exports = app;
