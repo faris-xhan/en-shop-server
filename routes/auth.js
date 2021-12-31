@@ -1,6 +1,6 @@
 const express = require('express');
-const tokens = require('../utils/tokens');
 const { User } = require('../models');
+const tokens = require('../utils/tokens');
 const { compareHash, createHash } = require('../utils/hashing');
 
 const router = express.Router();
