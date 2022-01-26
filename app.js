@@ -10,6 +10,7 @@ const userRouter = require('./routes/users');
 const productRouter = require('./routes/product');
 const cartRouter = require('./routes/cart');
 const orderRouter = require('./routes/order');
+const stripeRouter = require('./routes/stripe');
 
 /* Connecting Database */
 db.createConnection().then(console.log).catch(console.error);
@@ -27,6 +28,7 @@ app.use('/user', userRouter);
 app.use('/product', productRouter);
 app.use('/cart', cartRouter);
 app.use('/order', orderRouter);
+app.use('/stripe', stripeRouter);
 
 app.use('/', indexRouter);
 module.exports = app;
