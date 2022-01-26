@@ -8,6 +8,8 @@ const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/users');
 const productRouter = require('./routes/product');
+const cartRouter = require('./routes/cart');
+const orderRouter = require('./routes/order');
 
 /* Connecting Database */
 db.createConnection().then(console.log).catch(console.error);
@@ -23,6 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
 app.use('/product', productRouter);
+app.use('/cart', cartRouter);
+app.use('/order', orderRouter);
 
 app.use('/', indexRouter);
 module.exports = app;
