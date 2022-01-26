@@ -6,7 +6,7 @@ const {
   verifyTokenAndAdmin,
 } = require('../middlewares/tokenVerifications');
 
-const router = express.router();
+const router = express.Router();
 
 //CREATE
 router.post('/', verifyToken, async (req, res) => {
